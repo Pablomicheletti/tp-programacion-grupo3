@@ -35,3 +35,4 @@ Proceso trabajo_practico
 	Hasta Que leer_opcion = 5
 FinProceso
 
+SubProceso cargar_reserva(reserva por referencia, horario por referencia, dni por referencia, cancha por referencia)
