@@ -22,3 +22,5 @@ No se aceptarán trabajos prácticos que no cumplan con estos requerimientos.
 
 
 En nuestro caso hemos elegido crear un sistema para gestionar la reserva de canchas de fútbol, que cuenta con un menú para elegir los horarios y canchas disponibles.
+
+Participantes en este Trabajo: Nahuel Gutierrez, Ignacio Quevedo, Pablo Micheletti.
