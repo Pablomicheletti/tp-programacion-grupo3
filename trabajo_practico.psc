@@ -198,7 +198,7 @@ SubProceso busquedad_cliente(num_dni por referencia,cancha por referencia, horar
 	Repetir
 		Escribir "Ingrese el numero de DNI a buscar"
 		leer num_dni
-		Si num_dni>99999999 o nuim_dni<10000000 Entonces
+		Si num_dni>99999999 o num_dni<10000000 Entonces
 			Escribir "Ingrese un DNI valido"
 		Fin Si
 	Hasta Que num_dni <= 99999999 y num_dni >= 10000000
