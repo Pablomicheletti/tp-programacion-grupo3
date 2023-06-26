@@ -1,31 +1,39 @@
-Proceso trabajo_practico
-	Definir reserva, dni, cancha, horario como real
-	Definir leer_opcion Como Entero
-	Dimension reserva[6,2]
+Proceso Trabajo_Practico_6
+	Definir canchas,clientes Como Real
+	definir numCancha,dni Como Real
+	Definir opcion,i,j,horario Como Entero
+	
+	Dimension canchas[3, 90000000]
+	Dimension clientes[90000000, 20]
 	
 	bienvenida(enter)
 	
+	Horarios(hora)
+	
 	Repetir
-		menu_principal(opcion)
 		
-		Segun leer_opcion Hacer
+		MenuPrincipal(menu)
+		
+		Leer opcion
+		
+		Segun opcion Hacer
 			1:
-				cargar_reserva(horario, dni, bandera)
+				ReservaDeCanchas(canchas,clientes,dni,numCancha,horario)
 			2:
-				//busquedad_cliente()
+				BuscarClientes(clientes,i,dni, horario, numCancha)
 			3:
-				verificar_disponibilidad(disponible)
+				DisponibilidadDeCanchas(canchas,i,j)
 			4:
-				//cancelar_reserva()
+				CancelarReserva(clientes,canchas,dni,i)
 			5:
-				Escribir "Saliendo del programa..."
+				Salir(exit)
 			De Otro Modo:
-				Escribir "Opcion incorrecta."
+				Escribir "Opcion incorrecta"
 		Fin Segun
-	Hasta Que leer_opcion = 5
+	Hasta que opcion = 5
 FinProceso
 
-//Bienvenida
+//bienvenida
 SubProceso bienvenida(enter)
 	Escribir "----------------------------------------"
 	Escribir "-------------- Bienvenido --------------"
@@ -34,81 +42,160 @@ SubProceso bienvenida(enter)
 	leer enter
 FinSubProceso
 
-
-//Menu Pincipal
-SubProceso menu_principal(opcion)
-	Escribir "------- Menú Principal -------"
-	Escribir "1) Reservas de cancha."
-	Escribir "2) Buscar reserva de clientes."
-	Escribir "3) Ver disponibilidad de canchas."
-	Escribir "4) Cancelar reserva."
-	Escribir "5) Salir."
-	leer leer_opcion
+//Horarios
+SubProceso Horarios(hora)
+	Escribir "----- HORARIOS -----"
+	Mostrar " 1)	15:00"
+	Mostrar " 2)	16:00"
+	mostrar " 3)	17:00"
+	Mostrar " 4)	18:00"
+	Mostrar " 5)	19:00"
+	Mostrar " 6)	20:00"
+	Escribir "Presione cualquier tecla para continuar."
+	leer enter
 FinSubProceso
 
+//Menu_Principal 
+SubProceso MenuPrincipal(menu)
+	Escribir ""
+	Mostrar "----- MENÚ PRINCIPAL -----"
+	Mostrar "1. Reserva de canchas"
+	Mostrar "2. Buscar clientes"
+	Mostrar "3. Disponibilidad de canchas"
+	Mostrar "4. Cancelar reserva"
+	Mostrar "5. Salir del programa"
+	Mostrar "Ingrese una opción: "
+FinSubProceso
 
-//OPCION 1
-SubProceso cargar_reserva(dni Por Referencia,horario Por Referencia, bandera por referencia)
-	
-	Dimension  reserva[6,2]
-	reserva[0,0]=15
-	reserva[1,0]=16
-	reserva[2,0]=17
-	reserva[3,0]=18
-	reserva[4,0]=19
-	reserva[5,0]=20
-	
-	Repetir
-		Repetir
-			Escribir "1) Para reservar cancha 1."
-			Leer cancha
-			Si cancha<=0 o cancha>=2 Entonces
-				Escribir "Numero de cancha incorrecto"
-			Fin Si
-		Mientras Que cancha <= 0 o cancha >= 2
-		Escribir "Horarios disponibles"
-		Escribir "1) 15:00"
-		Escribir "2) 16:00"
-		Escribir "3) 17:00"
-		Escribir "4) 18:00"
-		Escribir "5) 19:00"
-		Escribir "6) 20:00"
-		Leer horario
-		
-		Si horario < 1 o horario > 6 Entonces
-			Escribir "Horario incorrecto. Inténtelo nuevamente."
+//OPCION_1
+SubProceso ReservaDeCanchas(canchas,clientes,dni Por Referencia,numCancha Por Referencia,horario Por Referencia)
+	Escribir ""
+    Mostrar "----- RESERVA DE CANCHAS -----"
+    Repetir
+		Mostrar "Ingrese el DNI del cliente: "
+		Leer dni
+		Si dni<10000000 o dni>99999999 Entonces
+			Escribir "dni incorrecto. Ingrese uno valido"
 		Fin Si
-		
-		Repetir
-			Escribir "Ingresar un número de documento para reservar."
-			Leer dni
-			Si dni > 999999999 o dni < 10000000 Entonces
-				Escribir "El dni ingresado es incorrecto. Intente nuevamente"
+	Mientras Que dni<10000000 o dni>99999999
+    Repetir
+		Mostrar "Ingrese el número de la cancha (1 a 2): "
+		Leer numCancha
+		Si numCancha<1 o numCancha<2 Entonces
+			Escribir "numero de cancha incorrecto"
+		Fin Si
+	Mientras Que numCancha<1 o numCancha>2
+    Repetir
+		Mostrar "Ingrese el turno que quiere reservar (1 a 6): "
+		Escribir "Turno 1 : 15:00"
+		Escribir "Turno 2 : 16:00"
+		Escribir "Turno 3 : 17:00"
+		Escribir "Turno 4 : 18:00"
+		Escribir "Turno 5 : 19:00"
+		Escribir "Turno 6 : 20:00"
+		Leer horario
+		Si horario<1 o horario>6 Entonces
+			Escribir "Numero turno incorrecto"
+		Fin Si
+	Mientras Que horario<1 o horario>6
+    Si numCancha >= 1 o numCancha <= 2 y horario >= 1 o horario <= 6 Entonces
+        Si canchas[numCancha, horario - 1] = 0 Entonces
+            canchas[numCancha, horario - 1] = 1
+            clientes[numCancha, 1] = dni
+            clientes[horario, 2] = dni
+            Mostrar "Reserva realizada con éxito"
+        Sino
+            Mostrar "La cancha ", numCancha, " ya esta reservada en el turno: ", horario
+        Fin Si
+    Sino
+        Mostrar "Número de cancha u horario inválido"
+    Fin Si
+FinSubProceso
+
+//OPCION_2
+SubProceso BuscarClientes(clientes,i,dni Por Referencia, horario Por Referencia, numCancha por referencia)
+	Definir encontrado Como Logico
+	Escribir ""
+    Mostrar "----- BUSCAR CLIENTES -----"
+    Mostrar "Ingrese el DNI del cliente: "
+    Leer dni
+    encontrado = Falso
+	
+    Para i <- 0 hasta 19 con paso 1 Hacer
+        Si clientes[2, i] == dni Entonces
+            Mostrar "Cliente encontrado:"
+            Mostrar "DNI: ", dni
+            Mostrar "Número de cancha: ", numCancha
+			Mostrar "Turno ", horario
+            encontrado = Verdadero
+        Fin Si
+    Fin Para
+	
+    Si encontrado = Falso Entonces
+        Mostrar "Cliente no encontrado"
+    Fin Si
+FinSubProceso
+
+//OPCION_3
+SubProceso DisponibilidadDeCanchas(canchas,i,j)
+	Escribir ""
+    Mostrar "----- DISPONIBILIDAD DE CANCHAS -----"
+    Mostrar "Horario"
+	Mostrar "15"
+	Escribir ""
+	Mostrar "16"
+	Escribir ""
+	Mostrar "17"
+	Escribir ""
+	Mostrar "18"
+	Escribir ""
+	Mostrar "19"
+	Escribir ""
+	Mostrar "20"
+	Escribir ""
+	
+    Para i <- 1 hasta 2 Con Paso 1 Hacer
+        Mostrar "Cancha ", i
+        Para j <- 0 hasta 5 Con Paso 1 Hacer
+            Si canchas[i, j] == 0 Entonces
+                Mostrar " DISPONIBLE "
 				Escribir ""
-			Fin Si
-		Hasta Que dni <= 999999999 y dni >= 10000000		
-		bandera=falso
-		Para j<-0 Hasta 0 Con Paso 1 Hacer
-			reserva[j,0] = horario
-			Para i<-0 Hasta 0 Con Paso 1 Hacer
-				reserva[i,1]= dni
-				Escribir  "horario ", horario " " , reserva[i,1] 
-				bandera= Verdadero
-			Fin Para
-		Fin Para
-		
-	Hasta Que  reserva[i,1] = 0
+            Sino
+                Mostrar " RESERVADO "
+				Escribir ""
+            Fin Si
+        Fin Para
+    Fin Para
 FinSubProceso
 
-
-//OPCION 3
-SubProceso verificar_disponibilidad(disponible)
-	Dimension  reserva[6,2]
-	Para i<-0 Hasta 5 Con Paso 1 Hacer
-		Para j<-0 Hasta 1 Con Paso 1 Hacer
-			Escribir reserva[i,j]
-		Fin Para
-	Fin Para
+//OPCION_4
+SubProceso CancelarReserva(clientes, canchas, dni Por Referencia, i)
+    Definir encontrado Como Logico
+    Mostrar ""
+    Mostrar "----- CANCELAR RESERVA -----"
+    Mostrar "Ingrese el DNI del cliente: "
+    Leer dni
+    encontrado = Falso
 	
+    Para i <- 0 hasta 49 con paso 1 Hacer
+        Si clientes[i, 1] == dni Entonces
+            cancha = clientes[i, 2]  
+            horario = clientes[i, 1]  
+            canchas[cancha, horario] = 0  
+            clientes[i, 1] = 0  
+            clientes[i, 2] = 0
+            Mostrar "Reserva cancelada con éxito"
+            encontrado = Verdadero
+        Fin Si
+    Fin Para
+	
+    Si encontrado = Falso Entonces
+        Mostrar "No se encontró reserva asociada al DNI ", dni
+    Fin Si
 FinSubProceso
-	
+
+//OPCION_5
+SubProceso Salir(exit)
+	Escribir ""
+	Escribir "GRACIAS POR UTILIZAR NUESTRA PAGINA"
+FinSubProceso
